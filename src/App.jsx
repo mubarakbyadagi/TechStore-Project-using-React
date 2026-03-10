@@ -8,8 +8,66 @@ import { useState, useEffect } from "react";
 function App() {
 
   const allBrands =[...new Set(products.map(p => p.brand))];
-  const [cartItmes, setCartItmes] = useState([]);
-  const [wishlist, setWishlist] = useState([]);
+  const [cartItmes, setCartItmes] = useState(()=> {
+
+
+    const savedcart = localStorage.getItem("techstore-cart");
+
+    if(savedcart) // true
+    {
+      try {
+        return JSON.parse(savedcart);
+        
+      } catch (error) {
+        console.log("Problem!!!",error);
+        return [];
+        
+        
+      }
+
+    } 
+    return [];
+  });
+
+
+
+  useEffect(()=>{
+
+    localStorage.setItem("techstore-cart", JSON.stringify(cartItmes));
+  
+  },[cartItmes]);
+
+
+
+
+  // const [wishlist, setWishlist] = useState([]);
+    const [wishlist, setWishlist] = useState(()=> {
+
+
+    const savedcart = localStorage.getItem("techstore-caRt");
+
+    if(savedcart) // true
+    {
+      try {
+        return JSON.parse(savedcart);
+        
+      } catch (error) {
+        console.log("Problem!!!",error);
+        return [];
+        
+        
+      }
+
+    } 
+    return [];
+  });
+
+  useEffect(()=>{
+
+    localStorage.setItem("techstore-caRt", JSON.stringify(wishlist));
+  
+  },[wishlist]);
+
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedBrand, setSelectedBrand]= useState("All");
   const [sortBy, setSortBy]= useState("");
